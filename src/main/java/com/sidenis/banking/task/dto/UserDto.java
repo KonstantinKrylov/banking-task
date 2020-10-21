@@ -1,11 +1,8 @@
 package com.sidenis.banking.task.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sidenis.banking.task.model.Account;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter

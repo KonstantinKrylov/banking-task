@@ -16,7 +16,6 @@ import java.util.List;
 @Table
 @Getter
 @Setter
-@ToString
 public class User extends ImpersonatedEntity {
 
     @Column

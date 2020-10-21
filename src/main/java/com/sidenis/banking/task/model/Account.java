@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import lombok.ToString;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 
 @Table
-@Entity
 @Getter
 @Setter
-public class Account extends AccountEntity {
+@Entity
+public class Account extends Persistable {
+
     @Column
     @NonNull
     private Double balance;
