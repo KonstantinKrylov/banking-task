@@ -12,4 +12,8 @@ public class AccountDto {
     @JsonProperty
     private Boolean isActive;
 
+    public boolean checkNull() {
+        return balance != null &&
+                isActive != null;
+    }
 }

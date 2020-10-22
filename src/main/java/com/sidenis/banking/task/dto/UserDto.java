@@ -1,8 +1,12 @@
 package com.sidenis.banking.task.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -17,4 +21,13 @@ public class UserDto {
     private AccountDto account;
     @JsonProperty
     private Boolean isAdmin;
+
+    public boolean checkNull() {
+        return firstName != null &&
+                lastName != null &&
+                passport != null &&
+                account != null &&
+                isAdmin != null &&
+                account.checkNull();
+    }
 }

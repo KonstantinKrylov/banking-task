@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("com.sidenis")
-@EnableJpaRepositories("com.sidenis.repository")
+@EnableJpaRepositories
 public class PersistentContext {
     @Bean
     public DataSource dataSource() {

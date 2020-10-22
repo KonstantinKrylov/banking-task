@@ -12,12 +12,9 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class ImpersonatedEntity extends Persistable {
     @Column
-    @NonNull
     protected String firstName;
     @Column
-    @NonNull
     protected String lastName;
     @Column
-    @NonNull
     protected String passport;
 }

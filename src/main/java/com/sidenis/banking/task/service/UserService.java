@@ -8,21 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
-public class AccountService {
+public class UserService {
 
     private UserRepository userRepository;
 
     @Autowired
-    public AccountService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public User createUser(UserDto dto) throws NullPointerException {
+    @Transactional
+    public User createAndSaveUser(UserDto dto) {
 
         User user = new User();
         Account account = new Account();
-
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setIsAdmin(dto.getIsAdmin());

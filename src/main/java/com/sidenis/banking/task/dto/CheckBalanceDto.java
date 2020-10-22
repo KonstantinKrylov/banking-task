@@ -9,16 +9,17 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class TransferRequestDto extends UserRequestDto {
-
-    public TransferRequestDto() {
-        requestType = RequestType.TRANSFER;
+public class CheckBalanceDto extends UserRequestDto {
+    public CheckBalanceDto() {
+        requestType = RequestType.BALANCE;
         requestTime = LocalDateTime.now();
     }
 
-
     @Override
     public boolean checkNull() {
-        return false;
+        return userFirstName != null &&
+                userLastName != null &&
+                userPassport != null &&
+                accountId != null;
     }
 }
