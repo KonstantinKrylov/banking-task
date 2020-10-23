@@ -7,6 +7,8 @@ import lombok.ToString;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class User extends ImpersonatedEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Account> accounts = new ArrayList<>();
 
     @Override

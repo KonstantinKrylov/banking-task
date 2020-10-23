@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CheckBalanceDto extends UserRequestDto {
-    public CheckBalanceDto() {
-        requestType = RequestType.BALANCE;
+public class TransferDto extends UserRequestDto {
+    public TransferDto() {
+        requestType = RequestType.TRANSFER;
         requestTime = LocalDateTime.now();
     }
 
@@ -19,7 +19,10 @@ public class CheckBalanceDto extends UserRequestDto {
         return userFirstName != null &&
                 userLastName != null &&
                 userPassport != null &&
-                accountId != null;
-    }
+                accountId != null &&
+                transactionValue != null &&
+                isLocal != null &&
+                destinationAccount != null;
 
+    }
 }

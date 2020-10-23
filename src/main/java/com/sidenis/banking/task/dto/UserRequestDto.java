@@ -28,6 +28,8 @@ public abstract class UserRequestDto {
     protected String destinationAccount;
     @JsonProperty
     protected Boolean isLocal;
+    @JsonProperty
+    protected Double transactionValue;
 
     public abstract boolean checkNull();
 }

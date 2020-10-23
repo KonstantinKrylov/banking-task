@@ -22,7 +22,7 @@ public class Transaction extends Persistable{
     @Column
     private LocalDateTime trxDateTime;
     @Column
-    private RequestType requestType;
+    private String requestType;
     @Column
     private Boolean isLocal;
     @Column
@@ -33,4 +33,6 @@ public class Transaction extends Persistable{
     private Double trxValue;
     @Column
     private Double commission;
+    @Column
+    private String destinationAccount;
 }

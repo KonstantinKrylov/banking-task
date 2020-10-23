@@ -5,8 +5,8 @@ import com.sidenis.banking.task.model.Transaction;
 import com.sidenis.banking.task.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Service
 public class TransactionService {
@@ -50,21 +50,45 @@ public class TransactionService {
         Transaction transaction = new Transaction();
         transaction.setAccountId(dto.getAccountId());
         transaction.setIsLocal(true);
-        transaction.setRequestType(dto.getRequestType());
+        transaction.setRequestType(dto.getRequestType().getType());
         transaction.setUserPassport(dto.getUserPassport());
+        transaction.setTrxValue(0.0);
+        transaction.setCommission(0.0);
         return transaction;
     }
 
     private Transaction returnTransferTransaction(UserRequestDto dto) {
-        return null;
+        Transaction transaction = new Transaction();
+        transaction.setAccountId(dto.getAccountId());
+        transaction.setIsLocal(dto.getIsLocal());
+        transaction.setRequestType(dto.getRequestType().getType());
+        transaction.setUserPassport(dto.getUserPassport());
+        transaction.setTrxValue(dto.getTransactionValue());
+        transaction.setCommission(0.0);
+        transaction.setDestinationAccount(dto.getDestinationAccount());
+        return transaction;
     }
 
     private Transaction returnWithdrawTransaction(UserRequestDto dto) {
-        return null;
+        Transaction transaction = new Transaction();
+        transaction.setAccountId(dto.getAccountId());
+        transaction.setIsLocal(true);
+        transaction.setRequestType(dto.getRequestType().getType());
+        transaction.setUserPassport(dto.getUserPassport());
+        transaction.setTrxValue(dto.getTransactionValue());
+        transaction.setCommission(0.0);
+        return transaction;
     }
 
     private Transaction returnDepositTransaction(UserRequestDto dto) {
-        return null;
+        Transaction transaction = new Transaction();
+        transaction.setAccountId(dto.getAccountId());
+        transaction.setIsLocal(true);
+        transaction.setRequestType(dto.getRequestType().getType());
+        transaction.setUserPassport(dto.getUserPassport());
+        transaction.setTrxValue(dto.getTransactionValue());
+        transaction.setCommission(0.0);
+        return transaction;
     }
 }
 
