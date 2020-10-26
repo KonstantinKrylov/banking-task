@@ -4,12 +4,15 @@ import com.sidenis.banking.task.dto.*;
 import com.sidenis.banking.task.exception.NoSuchAccountException;
 import com.sidenis.banking.task.exception.NotEnoughBalanceException;
 import com.sidenis.banking.task.model.Account;
+import com.sidenis.banking.task.model.Transaction;
 import com.sidenis.banking.task.repository.AccountRepository;
 import com.sidenis.banking.task.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class RequestService {
@@ -33,6 +36,12 @@ public class RequestService {
     }
 
     @Transactional
+    public List<Transaction> getHistory(TransactionHistoryDto dto) throws NoSuchAccountException{
+        accountService.getAccountIfExists(dto);
+        return transactionService.getHistory(dto);
+    }
+
+    @Transactional
     public Account depositMoney(DepositDto dto) throws NoSuchAccountException{
         Account account = accountService.getAccountIfExists(dto);
         account.setBalance(account.getBalance() + dto.getTransactionValue());
@@ -51,11 +60,11 @@ public class RequestService {
 
     @Transactional
     public Account transferMoney(TransferDto dto) throws NotEnoughBalanceException, NoSuchAccountException{
-        Account account = accountService.getAccountIfExists(dto);
-        accountService.checkIfEnoughBalance(dto, account);
-        account.setBalance(account.getBalance() - dto.getTransactionValue());
-        transactionService.createAndSaveTransaction(dto);
-        return accountRepository.save(account);
+        Account source = accountService.getAccountIfExists(dto);
+        accountService.checkIfEnoughBalance(dto, source);
+        Transaction transaction = transactionService.createAndSaveTransaction(dto);
+        source.setBalance(source.getBalance() - dto.getTransactionValue() - transaction.getCommission());
+        return accountRepository.save(source);
     }
 
 }

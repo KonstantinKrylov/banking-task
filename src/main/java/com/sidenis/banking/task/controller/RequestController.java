@@ -1,13 +1,13 @@
 package com.sidenis.banking.task.controller;
 
-import com.sidenis.banking.task.dto.CheckBalanceDto;
-import com.sidenis.banking.task.dto.DepositDto;
-import com.sidenis.banking.task.dto.TransferDto;
-import com.sidenis.banking.task.dto.WithdrawDto;
+import com.sidenis.banking.task.dto.*;
 import com.sidenis.banking.task.exception.NoSuchAccountException;
 import com.sidenis.banking.task.exception.NotEnoughBalanceException;
 import com.sidenis.banking.task.model.Account;
+import com.sidenis.banking.task.model.Transaction;
+import com.sidenis.banking.task.repository.TransactionRepository;
 import com.sidenis.banking.task.service.RequestService;
+import com.sidenis.banking.task.service.TransactionService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("banking/request")
 public class RequestController {
-
 
     private final RequestService requestService;
 
@@ -35,7 +37,7 @@ public class RequestController {
         if (!payload.checkNull()) {
             return new ResponseEntity<>("Insufficient data has been provided!", HttpStatus.BAD_REQUEST);
         }
-        Account account = null;
+        Account account;
         try {
             account = requestService.transferMoney(payload);
         } catch (NoSuchAccountException | NotEnoughBalanceException e) {
@@ -50,7 +52,7 @@ public class RequestController {
         if (!payload.checkNull()) {
             return new ResponseEntity<>("Insufficient data has been provided!", HttpStatus.BAD_REQUEST);
         }
-        Account account = null;
+        Account account;
         try {
             account = requestService.checkBalance(payload);
         } catch (NoSuchAccountException e) {
@@ -65,7 +67,7 @@ public class RequestController {
         if (!payload.checkNull()) {
             return new ResponseEntity<>("Insufficient data has been provided!", HttpStatus.BAD_REQUEST);
         }
-        Account account = null;
+        Account account;
         try {
             account = requestService.depositMoney(payload);
         } catch (NoSuchAccountException e) {
@@ -80,7 +82,7 @@ public class RequestController {
         if (!payload.checkNull()) {
             return new ResponseEntity<>("Insufficient data has been provided!", HttpStatus.BAD_REQUEST);
         }
-        Account account = null;
+        Account account;
         try {
             account = requestService.withdrawMoney(payload);
         } catch (NoSuchAccountException | NotEnoughBalanceException e) {
@@ -88,4 +90,20 @@ public class RequestController {
         }
         return ResponseEntity.ok().body(account);
     }
+
+    @ApiOperation(value = "Get transaction history after specific date")
+    @PostMapping("/history")
+    public ResponseEntity<Object> getHistory(@RequestBody TransactionHistoryDto payload) {
+        if (!payload.checkNull()) {
+            return new ResponseEntity<>("Insufficient data has been provided!", HttpStatus.BAD_REQUEST);
+        }
+        List<Transaction> history;
+        try {
+            history = requestService.getHistory(payload);
+        } catch (NoSuchAccountException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok().body(history);
+    }
+
 }

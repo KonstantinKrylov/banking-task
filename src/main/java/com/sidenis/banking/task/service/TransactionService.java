@@ -7,22 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
+    private final CommissionService commissionService;
 
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository) {
+    public TransactionService(TransactionRepository transactionRepository, CommissionService commissionService) {
         this.transactionRepository = transactionRepository;
+        this.commissionService = commissionService;
     }
 
     @Transactional
     public Transaction createAndSaveTransaction(UserRequestDto dto) {
         Transaction transaction = getTransaction(dto);
-
         return transactionRepository.save(transaction);
+    }
+
+   public List<Transaction> getHistory(UserRequestDto dto){
+        return transactionRepository.findByAccountIdAndUserPassportAndTrxDateTimeAfter(dto.getAccountId(),
+                dto.getUserPassport(),
+                dto.getAfter());
     }
 
     private Transaction getTransaction(UserRequestDto dto) {
@@ -64,7 +73,7 @@ public class TransactionService {
         transaction.setRequestType(dto.getRequestType().getType());
         transaction.setUserPassport(dto.getUserPassport());
         transaction.setTrxValue(dto.getTransactionValue());
-        transaction.setCommission(0.0);
+        transaction.setCommission(commissionService.calculateTrxCommission(dto));
         transaction.setDestinationAccount(dto.getDestinationAccount());
         return transaction;
     }

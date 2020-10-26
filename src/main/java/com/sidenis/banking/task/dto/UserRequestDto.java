@@ -1,6 +1,7 @@
 package com.sidenis.banking.task.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sidenis.banking.task.enums.RequestType;
 import lombok.Getter;
@@ -24,12 +25,16 @@ public abstract class UserRequestDto {
     protected String userPassport;
     @JsonProperty
     protected Long accountId;
-    @JsonProperty
-    protected String destinationAccount;
-    @JsonProperty
-    protected Boolean isLocal;
-    @JsonProperty
-    protected Double transactionValue;
 
-    public abstract boolean checkNull();
+    protected Long destinationAccount;
+    protected Boolean isLocal;
+    protected Double transactionValue;
+    protected LocalDateTime after;
+
+    public boolean checkNull(){
+        return userFirstName != null &&
+                userLastName != null &&
+                userPassport != null &&
+                accountId != null;
+    };
 }

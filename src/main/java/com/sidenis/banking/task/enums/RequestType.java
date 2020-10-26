@@ -8,7 +8,8 @@ public enum RequestType {
     TRANSFER("Transfer"),
     DEPOSIT("Deposit"),
     WITHDRAW("Withdraw"),
-    BALANCE("Balance");
+    BALANCE("Balance"),
+    HiSTORY("History");
 
     String type;
 

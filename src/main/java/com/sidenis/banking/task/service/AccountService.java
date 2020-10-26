@@ -32,8 +32,12 @@ public class AccountService {
         return acc;
     }
 
+    public Account getAccountIfExists(Long id) throws NoSuchAccountException {
+        return accountRepository.findById(id).orElseThrow(() -> new NoSuchAccountException("Account doesn't exist!"));
+    }
+
     public void checkIfEnoughBalance(UserRequestDto dto, Account account) throws NotEnoughBalanceException {
-        if(account.getBalance() < dto.getTransactionValue()){
+        if (account.getBalance() < dto.getTransactionValue()) {
             throw new NotEnoughBalanceException("Not enough balance for withdrawal or transfer operation!");
         }
     }

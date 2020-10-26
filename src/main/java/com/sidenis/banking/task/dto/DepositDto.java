@@ -1,13 +1,16 @@
 package com.sidenis.banking.task.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sidenis.banking.task.enums.RequestType;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@JsonAutoDetect(setterVisibility = JsonAutoDetect.Visibility.NONE,
+        getterVisibility = JsonAutoDetect.Visibility.NONE)
 public class DepositDto extends UserRequestDto {
     public DepositDto() {
         requestType = RequestType.DEPOSIT;
@@ -16,10 +19,13 @@ public class DepositDto extends UserRequestDto {
 
     @Override
     public boolean checkNull() {
-        return userFirstName != null &&
-                userLastName != null &&
-                userPassport != null &&
-                accountId != null &&
+        return super.checkNull() &&
                 transactionValue != null;
+    }
+
+    @JsonProperty
+    @Override
+    public void setTransactionValue(Double transactionValue) {
+        super.setTransactionValue(transactionValue);
     }
 }

@@ -34,5 +34,5 @@ public class Transaction extends Persistable{
     @Column
     private Double commission;
     @Column
-    private String destinationAccount;
+    private Long destinationAccount;
 }
