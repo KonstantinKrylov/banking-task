@@ -4,6 +4,7 @@ import com.sidenis.banking.task.dto.UserRequestDto;
 import com.sidenis.banking.task.model.Transaction;
 import com.sidenis.banking.task.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,8 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
-   public List<Transaction> getHistory(UserRequestDto dto){
+    @Cacheable(value = "history", key = "#dto.accountId")
+    public List<Transaction> getHistory(UserRequestDto dto) {
         return transactionRepository.findByAccountIdAndUserPassportAndTrxDateTimeAfter(dto.getAccountId(),
                 dto.getUserPassport(),
                 dto.getAfter());
