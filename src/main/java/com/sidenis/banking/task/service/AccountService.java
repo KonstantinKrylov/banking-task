@@ -1,5 +1,6 @@
 package com.sidenis.banking.task.service;
 
+import com.sidenis.banking.task.dto.AccountDto;
 import com.sidenis.banking.task.dto.UserRequestDto;
 import com.sidenis.banking.task.exception.NoSuchAccountException;
 import com.sidenis.banking.task.exception.NotEnoughBalanceException;
@@ -32,8 +33,17 @@ public class AccountService {
         return acc;
     }
 
-    public Account getAccountIfExists(Long id) throws NoSuchAccountException {
-        return accountRepository.findById(id).orElseThrow(() -> new NoSuchAccountException("Account doesn't exist!"));
+    public Account getAccountIfExists(AccountDto dto) throws NoSuchAccountException {
+        Account acc = accountRepository.findByUser_FirstNameAndUser_LastNameAndUser_PassportAndId(dto.getUserFirstName(),
+                dto.getUserLastName(),
+                dto.getUserPassport(),
+                dto.getAccountId());
+
+        if (acc == null) {
+            throw new NoSuchAccountException("Account doesn't exist!");
+        }
+
+        return acc;
     }
 
     public void checkIfEnoughBalance(UserRequestDto dto, Account account) throws NotEnoughBalanceException {

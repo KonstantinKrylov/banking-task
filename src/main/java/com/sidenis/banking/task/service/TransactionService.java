@@ -74,7 +74,7 @@ public class TransactionService {
         transaction.setUserPassport(dto.getUserPassport());
         transaction.setTrxValue(dto.getTransactionValue());
         transaction.setCommission(commissionService.calculateTrxCommission(dto));
-        transaction.setDestinationAccount(dto.getDestinationAccount());
+        transaction.setDestinationAccount(dto.getDestinationAccount().getAccountId());
         return transaction;
     }
 

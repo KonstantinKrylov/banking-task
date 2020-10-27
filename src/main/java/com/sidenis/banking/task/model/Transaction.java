@@ -1,5 +1,6 @@
 package com.sidenis.banking.task.model;
 
+import com.sidenis.banking.task.dto.AccountIdentityDto;
 import com.sidenis.banking.task.enums.RequestType;
 import lombok.Getter;
 import lombok.Setter;

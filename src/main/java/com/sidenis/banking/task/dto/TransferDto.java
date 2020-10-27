@@ -35,7 +35,7 @@ public class TransferDto extends UserRequestDto {
 
     @JsonProperty
     @Override
-    public void setDestinationAccount(Long destinationAccount) {
+    public void setDestinationAccount(AccountDto destinationAccount) {
         super.setDestinationAccount(destinationAccount);
     }
 

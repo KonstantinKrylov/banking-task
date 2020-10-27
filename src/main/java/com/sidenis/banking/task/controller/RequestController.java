@@ -6,6 +6,7 @@ import com.sidenis.banking.task.exception.NotEnoughBalanceException;
 import com.sidenis.banking.task.model.Account;
 import com.sidenis.banking.task.model.Transaction;
 import com.sidenis.banking.task.repository.TransactionRepository;
+import com.sidenis.banking.task.service.CommissionService;
 import com.sidenis.banking.task.service.RequestService;
 import com.sidenis.banking.task.service.TransactionService;
 import io.swagger.annotations.ApiOperation;
@@ -49,6 +50,7 @@ public class RequestController {
     @ApiOperation(value = "Check balance")
     @PostMapping("/balance")
     public ResponseEntity<Object> checkBalance(@RequestBody CheckBalanceDto payload) {
+
         if (!payload.checkNull()) {
             return new ResponseEntity<>("Insufficient data has been provided!", HttpStatus.BAD_REQUEST);
         }
@@ -105,5 +107,6 @@ public class RequestController {
         }
         return ResponseEntity.ok().body(history);
     }
+
 
 }

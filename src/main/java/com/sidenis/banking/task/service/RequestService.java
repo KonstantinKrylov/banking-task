@@ -61,9 +61,21 @@ public class RequestService {
     @Transactional
     public Account transferMoney(TransferDto dto) throws NotEnoughBalanceException, NoSuchAccountException{
         Account source = accountService.getAccountIfExists(dto);
+        Account destination = accountService.getAccountIfExists(dto.getDestinationAccount());
         accountService.checkIfEnoughBalance(dto, source);
         Transaction transaction = transactionService.createAndSaveTransaction(dto);
         source.setBalance(source.getBalance() - dto.getTransactionValue() - transaction.getCommission());
+        destination.setBalance(destination.getBalance() + dto.getTransactionValue());
+        accountRepository.save(destination);
+
+        DepositDto depositDto = new DepositDto();
+        depositDto.setTransactionValue(dto.getTransactionValue());
+        depositDto.setAccountId(dto.getDestinationAccount().getAccountId());
+        depositDto.setUserFirstName(dto.getDestinationAccount().getUserFirstName());
+        depositDto.setUserLastName(dto.getDestinationAccount().getUserLastName());
+        depositDto.setAccountId(dto.getDestinationAccount().getAccountId());
+        transactionService.createAndSaveTransaction(depositDto);
+
         return accountRepository.save(source);
     }
 
