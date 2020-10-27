@@ -5,10 +5,7 @@ import com.sidenis.banking.task.exception.NoSuchAccountException;
 import com.sidenis.banking.task.exception.NotEnoughBalanceException;
 import com.sidenis.banking.task.model.Account;
 import com.sidenis.banking.task.model.Transaction;
-import com.sidenis.banking.task.repository.TransactionRepository;
-import com.sidenis.banking.task.service.CommissionService;
 import com.sidenis.banking.task.service.RequestService;
-import com.sidenis.banking.task.service.TransactionService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("banking/request")
@@ -50,7 +46,6 @@ public class RequestController {
     @ApiOperation(value = "Check balance")
     @PostMapping("/balance")
     public ResponseEntity<Object> checkBalance(@RequestBody CheckBalanceDto payload) {
-
         if (!payload.checkNull()) {
             return new ResponseEntity<>("Insufficient data has been provided!", HttpStatus.BAD_REQUEST);
         }
@@ -107,6 +102,4 @@ public class RequestController {
         }
         return ResponseEntity.ok().body(history);
     }
-
-
 }
