@@ -1,6 +1,5 @@
 package com.sidenis.banking.task.enums;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter

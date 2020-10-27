@@ -11,9 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @SpringBootApplication
 @ComponentScan("com.sidenis")
 @EnableJpaRepositories
@@ -29,7 +26,7 @@ public class Application {
     private CommissionService commissionService;
 
     @Scheduled(cron = "0 0 1 1 * *")
-    public void scheduleMonthlyCommission(){
+    public void scheduleMonthlyCommission() {
         commissionService.chargeMonthlyCommission();
     }
 

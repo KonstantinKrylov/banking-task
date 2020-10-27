@@ -1,7 +1,5 @@
 package com.sidenis.banking.task.model;
 
-import com.sidenis.banking.task.dto.AccountIdentityDto;
-import com.sidenis.banking.task.enums.RequestType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table
-public class Transaction extends Persistable{
+public class Transaction extends Persistable {
 
     public Transaction() {
         this.trxDateTime = LocalDateTime.now();

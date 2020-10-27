@@ -1,18 +1,13 @@
 package com.sidenis.banking.task.repository;
 
-import com.sidenis.banking.task.model.Account;
 import com.sidenis.banking.task.model.Transaction;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Tuple;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface TransactionRepository extends PagingAndSortingRepository<Transaction, Long> {

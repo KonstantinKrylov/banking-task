@@ -16,7 +16,7 @@ public abstract class AccountIdentityDto {
     @JsonProperty
     protected Long accountId;
 
-    public boolean checkNull(){
+    public boolean checkNull() {
         return userFirstName != null &&
                 userLastName != null &&
                 userPassport != null &&

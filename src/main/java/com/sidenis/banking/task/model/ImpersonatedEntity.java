@@ -1,7 +1,6 @@
 package com.sidenis.banking.task.model;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.Column;

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public abstract class UserRequestDto extends AccountIdentityDto{
+public abstract class UserRequestDto extends AccountIdentityDto {
     @JsonIgnore
     protected LocalDateTime requestTime;
     @JsonIgnore

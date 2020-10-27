@@ -1,15 +1,14 @@
 package com.sidenis.banking.task.service;
 
-import com.sidenis.banking.task.dto.*;
+import com.sidenis.banking.task.dto.DepositDto;
+import com.sidenis.banking.task.dto.UserRequestDto;
 import com.sidenis.banking.task.exception.NoSuchAccountException;
 import com.sidenis.banking.task.exception.NotEnoughBalanceException;
 import com.sidenis.banking.task.model.Account;
 import com.sidenis.banking.task.model.Transaction;
 import com.sidenis.banking.task.repository.AccountRepository;
-import com.sidenis.banking.task.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -29,20 +28,20 @@ public class RequestService {
     }
 
     @Transactional
-    public Account checkBalance(CheckBalanceDto dto) throws NoSuchAccountException{
+    public Account checkBalance(UserRequestDto dto) throws NoSuchAccountException {
         Account account = accountService.getAccountIfExists(dto);
         transactionService.createAndSaveTransaction(dto);
         return account;
     }
 
     @Transactional
-    public List<Transaction> getHistory(TransactionHistoryDto dto) throws NoSuchAccountException{
+    public List<Transaction> getHistory(UserRequestDto dto) throws NoSuchAccountException {
         accountService.getAccountIfExists(dto);
         return transactionService.getHistory(dto);
     }
 
     @Transactional
-    public Account depositMoney(DepositDto dto) throws NoSuchAccountException{
+    public Account depositMoney(UserRequestDto dto) throws NoSuchAccountException {
         Account account = accountService.getAccountIfExists(dto);
         account.setBalance(account.getBalance() + dto.getTransactionValue());
         transactionService.createAndSaveTransaction(dto);
@@ -50,7 +49,7 @@ public class RequestService {
     }
 
     @Transactional
-    public Account withdrawMoney(WithdrawDto dto) throws NotEnoughBalanceException, NoSuchAccountException{
+    public Account withdrawMoney(UserRequestDto dto) throws NotEnoughBalanceException, NoSuchAccountException {
         Account account = accountService.getAccountIfExists(dto);
         accountService.checkIfEnoughBalance(dto, account);
         account.setBalance(account.getBalance() - dto.getTransactionValue());
@@ -59,7 +58,7 @@ public class RequestService {
     }
 
     @Transactional
-    public Account transferMoney(TransferDto dto) throws NotEnoughBalanceException, NoSuchAccountException{
+    public Account transferMoney(UserRequestDto dto) throws NotEnoughBalanceException, NoSuchAccountException {
         Account source = accountService.getAccountIfExists(dto);
         Account destination = accountService.getAccountIfExists(dto.getDestinationAccount());
         accountService.checkIfEnoughBalance(dto, source);

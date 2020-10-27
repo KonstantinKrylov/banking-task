@@ -1,7 +1,6 @@
 package com.sidenis.banking.task.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sidenis.banking.task.enums.RequestType;
 

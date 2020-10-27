@@ -7,14 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("banking/account")
 public class UserController {
 
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -25,7 +27,7 @@ public class UserController {
     @PostMapping("/user/create")
     public ResponseEntity<Object> createUser(@RequestBody UserDto payload) {
 
-        if(!payload.checkNull()){
+        if (!payload.checkNull()) {
             return new ResponseEntity<>("Insufficient data has been provided!", HttpStatus.BAD_REQUEST);
         }
 
